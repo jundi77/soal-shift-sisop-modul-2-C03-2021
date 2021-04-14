@@ -1,6 +1,7 @@
 #include <string.h> // untuk strtok
 
 
+
 #define DEBUG
 #define HOMEDIR ~
 #define zipdir pets.zip
@@ -23,7 +24,7 @@ int main()
      *   - hapus file
      *   - masukkan nama peliharaan dan umurnya ke file keterangan.txt di setiap folder jenis peliharaan sesuai format di docs
      *   - increment counter file
-     * - (parent, setelah loop, child async) while(counter belum sampai banyak file), infinite loop nunggu sampai childnya selesai semua
+     * - (parent, setelah loop, child async) while(counter belum sampai banyak file), infinite loop nunggu sampai childnya selesai semua (https://stackoverflow.com/questions/19461744/how-to-make-parent-wait-for-all-child-processes-to-finish#23872806)
      * - exit
      * 
      * menggunakan fork dan exec

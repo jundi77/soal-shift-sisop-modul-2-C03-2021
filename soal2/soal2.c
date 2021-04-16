@@ -12,6 +12,7 @@
 
 void unzip(const char *zipdir, const char *dest);
 void clean_unused_folder();
+void get_all_filenames_save_to_array(char *dest[]);
 
 int main()
 {
@@ -41,7 +42,18 @@ int main()
     unzip(PETSZIP, "result");
     chdir("result");
     clean_unused_folder();
-    // exit(0);
+
+    pid_t mkdir_er = fork();
+    if (mkdir_er == 0) {
+        execlp("mkdir", "mkdir", "petshop", NULL);
+        exit(0);
+    }
+    wait(NULL);
+
+    char **files;
+    get_all_filenames_save_to_array(files);
+    
+    return 1;
 }
 
 void unzip(const char *zipdir, const char *dest)
@@ -110,11 +122,66 @@ void clean_unused_folder()
 
         dir = strtok(NULL, "\n");
     }
-
-    exit(0);
 }
 
 void get_all_filenames_save_to_array(char *dest[])
 {
     // ls dan strtok
+    /**
+     * 
+     * "*()/" is a pattern that matches all of the subdirectories in the current directory
+     * (* would match all files and subdirectories; the / restricts it to directories). Similarly,
+     * to list all subdirectories under /home/alice/Documents, use ls -d /home/alice/Documents/*()/
+     */
+    
+    int fd[2];
+    pid_t child;
+    char buffer[100000];
+
+    pipe(fd);
+    child = fork();
+
+    if (child == 0) {
+        // child
+        // https://stackoverflow.com/questions/7292642/grabbing-output-from-exec
+        dup2(fd[1], STDOUT_FILENO);
+        close(fd[0]);
+        close(fd[1]);
+
+        if (execlp("find", ".", "-maxdepth", "1", "-type", "f", NULL) == -1) {
+            perror("Listing file yang akan diparse gagal");
+        }
+
+        exit(0);
+    }
+
+    close(fd[1]);
+    read(fd[0], buffer, sizeof(buffer) - 1);
+    close(fd[0]);
+    wait(NULL);
+
+    char *filename = strtok(buffer, "\n");
+
+    // bersihkan folder
+    while (filename != NULL) {
+        if (strcmp(".", filename)) {
+            // pid_t rm_er = fork();
+            // if (rm_er == 0) {
+            //     if (execlp("rm", "rm", "-rf", filename, NULL) == -1) {
+            //         perror("Gagal hapus folder tak berguna");
+            //     }
+            //     exit(0);
+            // }
+            // wait(NULL); // tunggu child selesai
+        }
+        printf("%s\n", filename);
+        pid_t renamer = fork();
+        if (renamer == 0) {
+            execlp("mv", "mv", filename, filename);
+        }
+
+        filename = strtok(NULL, "\n");
+    }
+
+    exit(0);
 }

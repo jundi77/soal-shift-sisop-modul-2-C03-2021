@@ -8,8 +8,9 @@
 
 #define DEBUG
 #define HOMEDIR ~
-#define petszip "pets.zip"
+#define PETSZIP "pets.zip"
 
+void unzip(const char *zipdir, const char *dest);
 void clean_unused_folder();
 
 int main()
@@ -37,20 +38,24 @@ int main()
      * tidak boleh pakai system(), mkdir(), dan rename()
      */
 
+    unzip(PETSZIP, "result");
     chdir("result");
     clean_unused_folder();
     // exit(0);
 }
 
-void unzip(char *zipdir, char *dest)
+void unzip(const char *zipdir, const char *dest)
 {
-    char *argv[] = {"unzip", "-d", "./result/", "./pets.zip", NULL};
-    if(execvp("unzip", argv) == -1) {
+    pid_t unzipper = fork();
+
+    if (unzipper == 0) {
+        if(execlp("unzip", "unzip", "-d", dest, zipdir, NULL) == -1) {
             perror("unzip(...): Error when calling unzip!");
-            exit(-1);
+        }
+        exit(0);
     }
 
-    // no need to send signal below because unzip handles the rest.
+    wait(NULL);
 }
 
 void clean_unused_folder()

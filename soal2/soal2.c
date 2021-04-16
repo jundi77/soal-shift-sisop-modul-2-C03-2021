@@ -37,6 +37,7 @@ int main()
      * tidak boleh pakai system(), mkdir(), dan rename()
      */
 
+    chdir("result");
     clean_unused_folder();
     // exit(0);
 }
@@ -83,18 +84,27 @@ void clean_unused_folder()
     }
 
     close(fd[1]);
-    while (read(fd[0], buffer, sizeof(buffer) - 1) != 0) {
-        // terima semua folder yang gak berguna dari pipe
-        buffer[sizeof(buffer) - 1] = '\0';
-        printf("%s", buffer);
-    }
+    read(fd[0], buffer, sizeof(buffer) - 1);
     close(fd[0]);
     wait(NULL);
 
-    // bersihkan folder
-    // strtok
+    char *dir = strtok(buffer, "\n");
 
-    // rm
+    // bersihkan folder
+    while (dir != NULL) {
+        if (strcmp(".", dir)) {
+            pid_t rm_er = fork();
+            if (rm_er == 0) {
+                if (execlp("rm", "rm", "-rf", dir, NULL) == -1) {
+                    perror("Gagal hapus folder tak berguna");
+                }
+                exit(0);
+            }
+            wait(NULL); // tunggu child selesai
+        }
+
+        dir = strtok(NULL, "\n");
+    }
 
     exit(0);
 }

@@ -63,7 +63,7 @@ void clean_unused_folder()
     
     int fd[2];
     pid_t child;
-    char buffer[10];
+    char buffer[100];
 
     pipe(fd);
     child = fork();
@@ -74,11 +74,9 @@ void clean_unused_folder()
         dup2(fd[1], STDOUT_FILENO);
         close(fd[0]);
         close(fd[1]);
-        char *argv[] = {"ls", "-d", "*/", NULL};
 
-        // execlp("ls", "ls", "-d", "*/", (char *)0);
-        if (execvp(argv[0], argv) == -1) {
-            perror("ls fail");
+        if (execlp("find", ".", "-maxdepth", "1", "-type", "d", NULL) == -1) {
+            perror("Listing folder yang tidak dipakai gagal");
         }
 
         exit(0);
@@ -87,8 +85,8 @@ void clean_unused_folder()
     close(fd[1]);
     while (read(fd[0], buffer, sizeof(buffer) - 1) != 0) {
         // terima semua folder yang gak berguna dari pipe
-        buffer[9] = '\0';
-        printf("Get: %s\n", buffer);
+        buffer[sizeof(buffer) - 1] = '\0';
+        printf("%s", buffer);
     }
     close(fd[0]);
     wait(NULL);

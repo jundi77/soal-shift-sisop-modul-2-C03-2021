@@ -16,13 +16,14 @@ void make_killer(char arg[]){
 	if(strcmp("-z", arg)==0){
 		FILE *fp;
 		fp = fopen("Killer.sh", "w+");
-		fprintf(fp, "killall soal3\nrm Killer.sh\n");
+		fprintf(fp, "#!/bin/bash\n\nkillall soal3\nrm Killer.sh\n");
 		fclose(fp);
 	}
+	// Mode -x
 	else if(strcmp("-x", arg)==0){
 		FILE *fp;
 		fp = fopen("Killer.sh", "w+");
-		fprintf(fp, "kill -9 %d\nrm Killer.sh\n", getpid());
+		fprintf(fp, "#!/bin/bash\n\nkill -9 %d\nrm Killer.sh\n", getpid());
 		fclose(fp);
 	}
 
@@ -55,9 +56,9 @@ void caesar_cipher(char text[], char enc[])
 int main(int argc, char *argv[])
 {
 	// Validate program call
-	if(argc < 2 || argc > 2){
-		// Program doesn't pass an argument
-		// or too much argument
+	if( argc < 2 || argc > 2 || 
+		!(strcmp(argv[1], "-x")==0 || strcmp(argv[1], "-z")==0) ){
+		// Invalid program call
 		printf("Need argument -x or -z\n");
 		exit(EXIT_FAILURE);
 	}
@@ -74,7 +75,7 @@ int main(int argc, char *argv[])
 	if(pid > 0){
 		exit(EXIT_SUCCESS);
 	}
-	
+
 	umask(0);
 
 	sid = setsid();
@@ -82,17 +83,31 @@ int main(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	}
 
+	// Make Killer.sh based on mode
+	if(strcmp(argv[1],"-x")==0 || strcmp(argv[1],"-z")==0){
+		make_killer(argv[1]);
+	}
+	else{
+		printf("Need argument -x or -z\n");
+	}
+
+
 	// if((chdir("/")) < 0){
 	// 	exit(EXIT_FAILURE);
 	// }
 
-	// Make Killer.sh based on mode
-	make_killer(argv[1]);
+	close(STDIN_FILENO);
+	close(STDOUT_FILENO);
+	close(STDERR_FILENO);
 
-	int fd = open("/dev/null", O_RDWR);
-	dup2(fd, STDIN_FILENO);
-	dup2(fd, STDOUT_FILENO);
-	dup2(fd, STDERR_FILENO);
+	// Redirect STDs_FILENO to /dev/null
+	int fd[2];
+	fd[0] = open("/dev/null", O_RDONLY);
+	fd[1] = open("/dev/null", O_RDWR);
+	fd[2] = open("/dev/null", O_RDWR);
+	dup2(fd[0], STDIN_FILENO);
+	dup2(fd[1], STDOUT_FILENO);
+	dup2(fd[2], STDERR_FILENO);
 
 	while(1)
 	{
@@ -113,7 +128,7 @@ int main(int argc, char *argv[])
 			time_t t = time(NULL);
 			struct tm mytime = *localtime(&t);
 			char folder[70];
-			strftime(folder, sizeof folder, "%F_%T", &mytime);
+			strftime(folder, sizeof folder, "%F_%H:%M:%S", &mytime);
 
 			// URL
 			char url[70] = {"https://picsum.photos/"};

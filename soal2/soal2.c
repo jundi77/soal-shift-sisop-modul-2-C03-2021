@@ -40,15 +40,23 @@ int main()
      * tidak boleh pakai system(), mkdir(), dan rename()
      */
 
-    unzip(PETSZIP, "result");
-    chdir("result");
-    clean_unused_folder();
-
+    // chdir("~");
     pid_t mkdir_er = fork();
+    if (mkdir_er == 0) {
+        execlp("mkdir", "mkdir", "/home/jundi/modul2", NULL);
+        exit(0);
+    }
+    wait(NULL);
+    unzip(PETSZIP, "/home/jundi/modul2");
+    chdir("/home/jundi/modul2");
+    clean_unused_folder();
+    mkdir_er = fork();
     if (mkdir_er == 0) {
         execlp("mkdir", "mkdir", "petshop", NULL);
         exit(0);
     }
+    wait(NULL);
+
     wait(NULL);
 
     char **files;
@@ -237,12 +245,8 @@ void parse_file_and_act(char *filename_origin)
         } else {
             *umur = '\0';
         }
-        FILE *ketp = fopen("keterangan.txt", "a");;
-        fprintf(ketp, "nama : %s\numur : %s tahun\n\n", nama, fileres2);
-        // TODO tulis ke keterangan.txt, fileres2 itu umur
-        fclose(ketp);
 
-        char path[strlen(jenis) + strlen(nama) + strlen(ekstensi) + 9];
+        char path[strlen(jenis) + strlen(nama) + strlen(ekstensi) + 23];
         strcpy(path, "petshop/");
         strncat(path, jenis, strlen(jenis));
         strcat(path, "/");
@@ -255,6 +259,12 @@ void parse_file_and_act(char *filename_origin)
             exit(0);
         }
         wait(NULL);
+        strcat(path, "keterangan.txt");
+        FILE *ketp = fopen(path, "a");;
+        fprintf(ketp, "nama : %s\numur : %s tahun\n\n", nama, fileres2);
+        // TODO tulis ke keterangan.txt, fileres2 itu umur
+        fclose(ketp);
+        path[strlen(path) - 14] = '\0';
 
         strcat(path, nama);
         strcat(path, ekstensi);

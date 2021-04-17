@@ -57,15 +57,10 @@ int main()
 
     get_all_filenames_save_to_array(&files, files_count);
 
-    parse_file_and_act(files[0]);
 
-    // for (i = 0; i < *files_count; ++i) {
-    //     pid_t mover = fork();
-    //     if (mover == 0) {
-            
-    //         exit(0);
-    //     }
-    // }
+    for (i = 0; i < *files_count; ++i) {
+        parse_file_and_act(files[i]);
+    }
 
     return 0;
 }
@@ -188,7 +183,6 @@ void get_all_filenames_save_to_array(char **dest_pointer[], int *current_dest_si
             // }
             // wait(NULL); // tunggu child selesai
         }
-        printf("%s\n", filename);
 
         if (*current_dest_size == 0) {
             dest = malloc(sizeof(char*));
@@ -197,6 +191,7 @@ void get_all_filenames_save_to_array(char **dest_pointer[], int *current_dest_si
         }
 
         dest[*current_dest_size] = filename;
+        dest[*current_dest_size] = strcat(dest[*current_dest_size], "\0");
         ++(*current_dest_size);
         *dest_pointer = dest;
         filename = strtok(NULL, "\n");
@@ -205,8 +200,16 @@ void get_all_filenames_save_to_array(char **dest_pointer[], int *current_dest_si
     wait(NULL);
 }
 
-void parse_file_and_act(char *filename)
+void parse_file_and_act(char *filename_origin)
 {
+    /**
+     * karena strtok memodifikasi string asal, perlu
+     * diklon dulu.
+     */
+    int filename_origin_length = strlen(filename_origin);
+    char filename[filename_origin_length];
+    strncpy(filename, filename_origin, filename_origin_length);
+
     /**
      *      *   (child)
      *   - pakai strtok dengan delimiter '_' untuk setiap nama agar dapat
@@ -218,22 +221,58 @@ void parse_file_and_act(char *filename)
      *   - hapus file
      *   - masukkan nama peliharaan dan umurnya ke file keterangan.txt di setiap folder jenis peliharaan sesuai format di docs
      */
-    char *peliharaan = strtok_r(filename, "_", &peliharaan);
     char *identitas;
     char *fileres1 = filename;
+    char *peliharaan;
+    char *ekstensi = strrchr(filename_origin, '.');
 
-    // while (peliharaan != NULL) {
-    //     char *jenis = strtok_r(filename, ";", &identitas);
-    //     char *nama = strtok_r(filename, ";", &identitas);
-    //     char *umur = strtok_r(filename, ";", &identitas);
-
-    //     peliharaan = strtok_r(filename, "_", &peliharaan);
-    // }
     while ((peliharaan = strtok_r(fileres1, "_", &fileres1))) {
         char *fileres2 = peliharaan;
         char *jenis = strtok_r(fileres2, ";", &fileres2);
         char *nama = strtok_r(fileres2, ";", &fileres2);
-        char *umur = strtok_r(fileres2, ";", &fileres2);
+        // char *umur = strtok_r(fileres2, "jpg", &fileres2);
+        char *umur = strrchr(fileres2, '.');
+        if (umur == NULL) {
+            umur = fileres2;
+        } else {
+            *umur = '\0';
+        }
+        FILE *ketp = fopen("keterangan.txt", "a");;
+        fprintf(ketp, "nama : %s\numur : %s tahun\n\n", nama, fileres2);
+        // TODO tulis ke keterangan.txt, fileres2 itu umur
+        fclose(ketp);
+
+        char path[strlen(jenis) + strlen(nama) + strlen(ekstensi) + 9];
+        strcpy(path, "petshop/");
+        strncat(path, jenis, strlen(jenis));
+        strcat(path, "/");
+
+        pid_t mkdir = fork();
+        if (mkdir == 0) {
+            if (execlp("mkdir", "mkdir", path, NULL) == -1) {
+                perror("Gagal membuat folder jenis peliharaan");
+            }
+            exit(0);
+        }
+        wait(NULL);
+
+        strcat(path, nama);
+        strcat(path, ekstensi);
+
+        pid_t cp_er = fork();
+        if (cp_er == 0) {
+            if (execlp("cp", "cp", filename_origin, path, NULL) == -1) {
+                perror("Gagal copy gambar peliharaan");
+            }
+            exit(0);
+        }
+        wait(NULL);
         printf("%s\n", peliharaan);
     }
+
+    pid_t rm_er = fork();
+    if (rm_er == 0 && execlp("rm", "rm", filename_origin, NULL) == -1) {
+        perror("Gagal hapus file gambar peliharaan");
+    }
+    wait(NULL);
 }

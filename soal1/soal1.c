@@ -12,286 +12,276 @@
 #include <unistd.h>
 #include <wait.h>
 
-void daemon() 
+void daemonstart() 
 {
-    test_t test, s_id;
-    test = fork();
+    pid_t pid, sid; 
     
-	if(test < 0)
+	pid=fork(); 
+    if(pid<0)
 	{
 		exit(EXIT_FAILURE);
-	}
-    if(test > 0)
+	} 
+    if(pid>0)
 	{
 		exit(EXIT_SUCCESS);
-	} 
+	}
     
-	umask(0);
-    s_id = sets_id();
+	umask(0); 
     
-	if(s_id < 0)
+	sid = setsid(); 
+    if(sid<0)
 	{
 		exit(EXIT_FAILURE);
 	} 
-    if((chdir("/home/zidan/Sisop/Modul2/Soal1")) < 0)
-	{
-		exit(EXIT_FAILURE);
-	} 
-	
-    close(STDIN_FILENO);
+    
+	close(STDIN_FILENO); 
     close(STDOUT_FILENO);
     close(STDERR_FILENO);
 }
 
 int main() 
 {
-    daemon();
+    daemonstart(); 
     int step, step2, step3, step4, step5, step6, step7, step8, step9, step10, step11, step12;
     
     while(1) 
 	{
-        test_t state, state1, state2, state3, state4, state5, state6, state7, state8, state9, state10, state11, state12;
+        pid_t qid, qid1, qid2, qid3, qid4, qid5, qid6, qid7, qid8, qid9, qid10, qid11, qid12;
         
-        time_t now = time(NULL);
-        struct tm *t = localtime(&now);
+        time_t now = time(NULL); 
+        struct tm *t = localtime(&now); 
         
-		/* SOAL E */
-		if(t->tm_mon == 3 && t->tm_mday == 9 && t->tm_hour == 16 && t->tm_min == 22 && t->tm_sec == 0) 
+		//E
+		if(t->tm_mon==3 && t->tm_mday==9 && t->tm_hour==16 && t->tm_min==22 && t->tm_sec==0) 
 		{
-			state = fork();
-			if(state < 0)
+			qid=fork();
+			if(qid<0)
 			{
 				exit(0);
-			} 
-			if(state == 0) 
+			}
+			if(qid==0) 
 			{
-				/* SOAL A */
-				state1 = fork();
-				if(state1 < 0)
+				//A
+				qid1=fork(); 
+				if(qid1<0)
 				{
 					exit(0);
 				} 
-				if(state1 == 0) 
+				if(qid1==0) 
 				{
-					char *arg[] = {"mkdir", "Musyik", NULL};
+					char *arg[] = {"mkdir", "Musyik", NULL}; 
 					execv("/bin/mkdir", arg);
 				}
 
-				state2 = fork();
-				if(state2 < 0)
+				qid2=fork();
+				if(qid2<0)
 				{
 					exit(0);
-				} 
-				if(state2 == 0) 
+				}
+				if(qid2==0) 
 				{
 					char *arg[] = {"mkdir", "Fylm", NULL};
 					execv("/bin/mkdir", arg);
 				}
 
-				state3 = fork();
-				if(state3 < 0)
+				qid3=fork();
+				if(qid3<0)
 				{
 					exit(0);
-				} 
-				if(state3 == 0) 
+				}
+				if(qid3==0) 
 				{
 					char *arg[] = {"mkdir", "Pyoto", NULL};
 					execv("/bin/mkdir", arg);
 				}
 
-				/* SOAL B */
-				while(wait(&step) > 0);
-				
-				state4 = fork();
-				if(state4 < 0)
+				//B
+				while(wait(&step) > 0); 
+				qid4=fork();
+				if(qid4<0) 
 				{
 					exit(0);
 				}
-				if(state4 == 0) 
-				{
+				if(qid4==0) 
+				{ 
 					char *arg[] = {"wget", "--no-check-certificate", "https://drive.google.com/uc?id=1ZG8nRBRPquhYXq_sISdsVcXx5VdEgi-J&export=download", "-O", "Musik_for_Stevany.zip", "-o", "/dev/null", NULL};
-					execv("/usr/bin/wget", arg);
+					execv("/usr/bin/wget", arg); 
 				}
 
 				while(wait(&step2) > 0);
-				
-				state5 = fork();
-				if(state5 < 0)
+				qid5=fork();
+				if(qid5<0) 
 				{
 					exit(0);
-				} 
-				if(state5 == 0) 
+				}
+				if(qid5==0) 
 				{
 					char *arg[] = {"wget", "--no-check-certificate", "https://drive.google.com/uc?id=1ktjGgDkL0nNpY-vT7rT7O6ZI47Ke9xcp&export=download", "-O", "Film_for_Stevany.zip", "-o", "/dev/null", NULL};
 					execv("/usr/bin/wget", arg);
 				}
 
 				while(wait(&step3) > 0);
-				
-				state6 = fork();
-				if(state6 < 0)
+				qid6=fork();
+				if(qid6<0) 
 				{
 					exit(0);
-				} 
-				if(state6 == 0) 
+				}
+				if(qid6==0) 
 				{
 					char *arg[] = {"wget", "--no-check-certificate", "https://drive.google.com/uc?id=1FsrAzb9B5ixooGUs0dGiBr-rC7TS9wTD&export=download", "-O", "Foto_for_Stevany.zip", "-o", "/dev/null", NULL};
 					execv("/usr/bin/wget", arg);
 				}
 
-				/* SOAL C */
+				//C
 				while(wait(&step4) > 0);
-				
-				state7 = fork();
-				if(state7 < 0)
+				qid7=fork();
+				if(qid7<0) 
 				{
 					exit(0);
-				} 
-				if(state7 == 0)
+				}
+				if(qid7==0) 
 				{
-					char *arg[] = {"unzip", "-o", "-q", "./Musik_for_Stevany.zip", NULL};
+					char *arg[] = {"unzip", "-o", "-q", "./Musik_for_Stevany.zip", NULL}; 
 					execv("/usr/bin/unzip", arg);
 				}
 
 				while(wait(&step5) > 0);
-				
-				state8 = fork();
-				if(state8 < 0)
+				qid8=fork();
+				if(qid8<0) 
 				{
 					exit(0);
-				} 
-				if(state8 == 0) 
+				}
+				if(qid8==0) 
 				{
 					char *arg[] = {"unzip", "-o", "-q", "./Film_for_Stevany.zip", NULL};
 					execv("/usr/bin/unzip", arg);
 				}
 
 				while(wait(&step6) > 0);
-				
-				state9 = fork();
-				if(state9 < 0)
+				qid9=fork();
+				if(qid9<0) 
 				{
 					exit(0);
-				} 
-				if(state9 == 0) 
+				}
+				if(qid9==0) 
 				{
 					char *arg[] = {"unzip", "-o", "-q", "./Foto_for_Stevany.zip", NULL};
 					execv("/usr/bin/unzip", arg);
 				}
 
-				/* SOAL D */
+				//D
 				while(wait(&step7) > 0);
-				DIR *dirp;
+				DIR *dir; 
 				struct dirent *entry;
-				dirp = opendir("./MUSIK");
-				while((entry = readdir(dirp)) != NULL) 
+				dir = opendir("./MUSIK"); 
+				while((entry = readdir(dir)) != NULL) 
 				{
 					if(entry->d_type == DT_REG) 
 					{
-						test_t state;
-						state = fork();
-						if(state < 0) 
+						pid_t qid;
+						qid=fork();
+						if(qid<0) 
 						{
 							exit(0);
 						}
-						if(state == 0) 
+						if(qid==0) 
 						{
-							char from[300], toward[300];
-							sprintf(from, "./MUSIK/%s", entry->d_name);
-							sprintf(toward, "./Musyik");
-							char *arg[] = {"cp", "-r", from, toward, NULL};
+							char asal[300], tujuan[300];
+							sprintf(asal, "./MUSIK/%s", entry->d_name); 
+							sprintf(tujuan, "./Musyik");
+							char *arg[] = {"cp", "-r", asal, tujuan, NULL}; 
 							execv("/bin/cp", arg);
 						}
 					}
 				}
 
 				while(wait(&step8) > 0);
-				DIR *dirp2;
+				DIR *dir2;
 				struct dirent *entry2;
-				dirp2 = opendir("./FILM");
-				while((entry2 = readdir(dirp2)) != NULL) 
+				dir2 = opendir("./FILM");
+				while((entry2 = readdir(dir2)) != NULL) 
 				{
 					if(entry2->d_type == DT_REG) 
 					{
-						test_t state;
-						state = fork();
-						if(state < 0) 
+						pid_t qid;
+						qid=fork();
+						if(qid<0) 
 						{
 							exit(0);
 						}
-						if(state == 0) 
+						if(qid==0) 
 						{
-							char from[300], toward[300];
-							sprintf(from, "./FILM/%s", entry2->d_name);
-							sprintf(toward, "./Fylm");
-							char *arg[] = {"cp", "-r", from, toward, NULL};
+							char asal[300], tujuan[300];
+							sprintf(asal, "./FILM/%s", entry2->d_name);
+							sprintf(tujuan, "./Fylm");
+							char *arg[] = {"cp", "-r", asal, tujuan, NULL};
 							execv("/bin/cp", arg);
 						}
 					}
 				}
 				
-				while(wait(&step9) > 0);
-				DIR *dirp3;
+				while(wait(&step9) > 0); 
+				DIR *dir3;
 				struct dirent *entry3;
-				dirp3 = opendir("./FOTO");
-				while((entry3 = readdir(dirp3)) != NULL) 
+				dir3 = opendir("./FOTO");
+				while((entry3 = readdir(dir3)) != NULL) 
 				{
 					if(entry3->d_type == DT_REG) 
 					{
 						if(strstr(entry3->d_name, ".jpg")) 
 						{
-							test_t state;
-							state = fork();
-							if(state < 0) 
+							pid_t qid;
+							qid=fork();
+							if(qid<0) 
 							{
 								exit(0);
 							}
-							if(state == 0) 
+							if(qid==0) 
 							{
-								char from[300], toward[300];
-								sprintf(from, "./FOTO/%s", entry3->d_name);
-								sprintf(toward, "./Pyoto");
-								char *arg[] = {"cp", "-r", from, toward, NULL};
+								char asal[300], tujuan[300];
+								sprintf(asal, "./FOTO/%s", entry3->d_name);
+								sprintf(tujuan, "./Pyoto");
+								char *arg[] = {"cp", "-r", asal, tujuan, NULL};
 								execv("/bin/cp", arg);
 							}
 						}
 					}
 				}
 				
-				while(wait(&step10) > 0);
+				while(wait(&step10) > 0); 
 				exit(0);
 			}
 		}
 		
-		/* SOAL F */
-		else if(t->tm_mon == 3 && t->tm_mday == 9 && t->tm_hour == 22 && t->tm_min == 22 && t->tm_sec == 0) 
+		//F
+		else if(t->tm_mon==3 && t->tm_mday==9 && t->tm_hour==22 && t->tm_min==22 && t->tm_sec==0) 
 		{
-			state12 = fork();
-    	    if(state12 < 0)
+			qid12 = fork();
+    	    if(qid12<0) 
 			{
 				exit(0);
-			} 
-	        if(state12 == 0) 
+			}
+	        if(qid12==0) 
 			{
-				state10 = fork();
-				if(state10 < 0) 
+				qid10=fork();
+				if(qid10<0) 
 				{
 					exit(0);
 				}
-				if(state10 == 0) 
+				if(qid10==0)
 				{
 					char *arg[] = {"zip", "-q", "-rm", "Lopyu_Stevany.zip", "./Musyik", "./Fylm", "./Pyoto", NULL};
 					execv("/usr/bin/zip", arg);
 				}
 				
-				state11 = fork();
-				if(state11 < 0) 
+				qid11=fork();
+				if(qid11<0) 
 				{
 					exit(0);
 				}
-				if(state11 == 0) 
+				if(qid11==0) 
 				{
-					char *arg[] = {"rm", "-r", "./MUSIK", "./FILM", "./FOTO", NULL};
+					char *arg[] = {"rm", "-r", "./MUSIK", "./FILM", "./FOTO", NULL}; 
 					execv("/bin/rm", arg);
 				}
 				
@@ -299,6 +289,7 @@ int main()
 				exit(0);
 			}
 		}
+		
         while(wait(&step12) > 0);
         sleep(1);
     }

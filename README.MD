@@ -36,7 +36,7 @@ f. Terakhir, setelah tiba pada waktu ulang tahunnya Stevany, semua folder akan d
 ![VirtualBox_Ubuntu_25_04_2021_20_36_06](https://user-images.githubusercontent.com/55623766/115995468-83ba3d00-a605-11eb-8f71-add06452c722.png)
 
 ## Soal 2
-Alur program yang dirancang untuk nomor 2 sebagai jawaban kami adalah:`execv
+Alur program yang dirancang untuk nomor 2 sebagai jawaban kami adalah:
 1. Membuat folder `modul2` di `$HOME`, menggunakan `mkdir`, lalu `chdir` ke folder modul2.
 2. `unzip` `pets.zip` ke folder `modul2`.
 3. Hapus folder yang tidak diperlukan di folder `modul2` (hasil ekstrak `pets.zip`), , listing folder menggunakan `find` dengan argumen `-d`, dan penghapusan menggunakan `rm` dengan argumen `-rf`.

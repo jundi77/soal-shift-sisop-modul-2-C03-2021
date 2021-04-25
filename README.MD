@@ -5,11 +5,11 @@
 3. Jundullah Hanif Robbani (05111940000144)
 
 ## Soal 1
-a. Dalam soal a kami menggunakan  `fork` pada setiap variabel  `qid`. Kemudian Untuk membuat folder Musyik, Fylm, dan Pyoto kami menggunakan `mkdir` dan fungsi `execv` untuk menjalankannya.
+a. Dalam soal a, kami menggunakan  `fork` pada setiap variabel  `qid`. Kemudian Untuk membuat folder Musyik, Fylm, dan Pyoto kami menggunakan `mkdir` dan fungsi `execv` untuk menjalankannya.
 
 ![Screenshot (1726)](https://user-images.githubusercontent.com/55623766/115993667-ff17f080-a5fd-11eb-8570-ce4399a4ec6b.png)
 
-b. Dalam soal b kami menggunakan variabel `step` dan menggunakan fungsi `wait` untuk menunggu `child process` selesai melakukan tugasnya, yaitu membuat folder. Kami juga menggunakan tetap `fork` pada setiap variabel  `qid`. Kemudian Untuk mendownload folder Musyik, Fylm, dan Pyoto kami menggunakan `wget` dengan link yang sudah tersedia pada soal dan fungsi `execv` untuk menjalankannya.
+b. Dalam soal b, kami menggunakan variabel `step` dan menggunakan fungsi `wait` untuk menunggu `child process` selesai melakukan tugasnya, yaitu membuat folder. Kami juga menggunakan tetap `fork` pada setiap variabel  `qid`. Kemudian Untuk mendownload folder Musyik, Fylm, dan Pyoto kami menggunakan `wget` dengan link yang sudah tersedia pada soal dan fungsi `execv` untuk menjalankannya.
 
 ![Screenshot (1727)](https://user-images.githubusercontent.com/55623766/115994213-3daeaa80-a600-11eb-867d-865eeaadbf86.png)
 
@@ -17,10 +17,12 @@ c. Untuk mengekstrak folder zip pada soal b kami menggunakan `unzip` dan fungsi 
 
 ![Screenshot (1728)](https://user-images.githubusercontent.com/55623766/115994366-df35fc00-a600-11eb-8232-bb4697d14e88.png)
 
-d. 
+d. Pada soal d, kami memindahkan file yang sebelumnya telah didownload dan diekstrak menuju folder tujuan yang telah dibuat dengan menggunakan `cp` dan fungsi `execv` untuk menjalankannya. 
+
+
 
 ## Soal 2
-Alur program yang dirancang untuk nomor 2 sebagai jawaban kami adalah:
+Alur program yang dirancang untuk nomor 2 sebagai jawaban kami adalah:`execv
 1. Membuat folder `modul2` di `$HOME`, menggunakan `mkdir`, lalu `chdir` ke folder modul2.
 2. `unzip` `pets.zip` ke folder `modul2`.
 3. Hapus folder yang tidak diperlukan di folder `modul2` (hasil ekstrak `pets.zip`), , listing folder menggunakan `find` dengan argumen `-d`, dan penghapusan menggunakan `rm` dengan argumen `-rf`.

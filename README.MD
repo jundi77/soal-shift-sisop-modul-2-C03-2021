@@ -43,4 +43,5 @@ Pada soal ini terdapat 5 permasalahan yang perlu dikerjakan. Sebelum itu, soal n
 
 ### Kendala saat mengerjakan
 Sempat tidak berjalan `execv` untuk memanggil `wget` dimana file yang terdownload tidak lengkap. Menduga karena semua STD ditutup makanya mengalihkan STD ke `/dev/null` dengan menggunakan `fd` dan `dup2`, dengan begitu program utama dapat berjalan dengan lancar.
+
 ![fd](https://user-images.githubusercontent.com/68368240/115980487-59419300-a5b7-11eb-8e57-f25403009c2e.png "Mengalihkan STDs ke /dev/null")

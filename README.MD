@@ -35,6 +35,9 @@ f. Terakhir, setelah tiba pada waktu ulang tahunnya Stevany, semua folder akan d
 
 ![VirtualBox_Ubuntu_25_04_2021_20_36_06](https://user-images.githubusercontent.com/55623766/115995468-83ba3d00-a605-11eb-8f71-add06452c722.png)
 
+### Kendala saat mengerjakan
+Sempat terkendala dalam mengatur waktu dalam terminal linux. Walaupun saya sudah menggunakan `sudo date --set="2021-04-09 16:22:00"` pada terminal linux tapi belum bisa berjalan. Jadi, folder-folder belum bisa terdownload. Kemudian, saya mengatur setting time-nya langsung pada sistem linux dengan mengubah waktu menjadi 16:22 dan tanggal menjadi 9 April. Setelah saya melakukan ini baru kemudian `sudo date --set="2021-04-09 16:22:00"` pada terminal linux bisa berjalan dan folder-folder yang diinginkan bisa muncul.
+
 ## Soal 2
 Alur program yang dirancang untuk nomor 2 sebagai jawaban kami adalah:
 1. Membuat folder `modul2` di `$HOME`, menggunakan `mkdir`, lalu `chdir` ke folder modul2.

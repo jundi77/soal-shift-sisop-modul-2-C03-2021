@@ -7,6 +7,33 @@
 ## Soal 1
 
 ## Soal 2
+Alur program yang dirancang untuk nomor 2 sebagai jawaban kami adalah:
+1. Membuat folder `modul2` di `$HOME`, menggunakan `mkdir`, lalu `chdir` ke folder modul2.
+2. `unzip` `pets.zip` ke folder `modul2`.
+3. Hapus folder yang tidak diperlukan di folder `modul2` (hasil ekstrak `pets.zip`), , listing folder menggunakan `find` dengan argumen `-d`, dan penghapusan menggunakan `rm` dengan argumen `-rf`.
+4. Membuat folder `petshop` di dalam folder `modul2` menggunakan `mkdir`.
+5. Menyimpan list nama-nama file yang akan dipindah, listing file menggunakan `find` dengan argumen `-f`.
+6. Nama file diparsing menggunakan `strtok`:
+   1. Yang pertama adalah pemisahan string dengan karakter `_` yang menandakan terdapat hewan yang berbeda di dalam gambar, sebab file perlu disalin sebanyak banyak hewan yang ada di gambar.
+   2. Untuk setiap string data hewan, lakukan:
+      1. Pemisahan data-data string dengan karakter `;`, kemudian ambil data jenis, nama, dan umur hewan.
+      2. Membuat folder jenis peliharaan di dalam folder `petshop`.
+      3. Menambahkan nama dan umur peliharaan ke file `keterangan.txt` di dalam folder jenis peliharaan.
+      4. Menyalin file gambar ke dalam folder jenis peliharaan dengan penamaan baru menggunakan `cp`.
+   3. Hapus file gambar menggunakan `rm`.
+7. Program selesai.
+
+Dalam pengerjaan, `find` digunakan untuk listing direktori ketimbang `ls` disebabkan adanya error yang sulit dicari penyebabnya saat menggunakan `ls`. Untuk transfer data hasil output child ke parent, misal dalam transfer output `find`, digunakan fungsi `pipe` untuk menyambungkan antara child dan parent, lalu digunakan `dup2` untuk mengalihkan output ke `pipe`.
+
+| ![image](https://user-images.githubusercontent.com/40772378/115982884-62872b80-a5c8-11eb-8869-434fedb0a53a.png) | 
+|:--:| 
+| *Program sedang berjalan, `mkdir` terlihat mengeluarkan pesan bahwa folder jenis hewan telah dibuat* |
+
+Saat pengerjaan, debugging menggunakan visual studio code tidak memberikan cara debug child-child proses yang berjalan, sehingga memberikan tantangan tersendiri untuk debugging bug dan error yang ada.
+
+| ![debugging dengan vscode](https://user-images.githubusercontent.com/40772378/115982729-77af8a80-a5c7-11eb-8854-accab7466900.png) | 
+|:--:| 
+| *Debugging menggunakan vscode* |
 
 ## Soal 3
 Pada soal ini terdapat 5 permasalahan yang perlu dikerjakan. Sebelum itu, soal nomor 3 ini harus dikerjakan dengan mengubah proses menjadi daemon terlebih dahulu karena program ini akan dikerjakan menggunakan 2 metode dimana program akan berjalan di latar belakang.

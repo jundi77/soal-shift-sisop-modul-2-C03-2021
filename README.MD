@@ -5,6 +5,7 @@
 3. Jundullah Hanif Robbani (05111940000144)
 
 ## Soal 1
+a. Dalam soal a kami menggunakan 'fork()' pada setiap variabel 'qid'. Kemudian Untuk membuat folder Musyik, Fylm, dan Pyoto kami menggunakan command mkdir dan fungsi execv() untuk menjalankannya
 
 ## Soal 2
 Alur program yang dirancang untuk nomor 2 sebagai jawaban kami adalah:

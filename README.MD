@@ -13,32 +13,33 @@ Pada soal ini terdapat 5 permasalahan yang perlu dikerjakan. Sebelum itu, soal n
 1. Membuat direktori dengan nama waktu saat itu juga **[tahun-bulan-tanggal_jam:menit:detik]** dengan selang 40 detik.
 
    Waktu saat membuat direktori dapat diambil dengan menggunakan library `**time.h**`. Setelah itu, dapat membuat direktori dengan membuat sub-proses terlebih dahulu dan menggunakan `execv` untuk memanggil `mkdir`. Program utama lalu melakukan `sleep(40)` agar directory selanjutnya dibuat tepat 40 detik setelahnya.
-
-   [Gambar mengambil waktu saat ini]
-   [Gambar membuat direktori]
+   
+   ![mkdir](https://user-images.githubusercontent.com/68368240/115980362-6742e400-a5b6-11eb-83af-559198b60e61.png "Membuat direktori")
 
 2. Mendownload 10 gambar di https://picsum.photos/ dengan bentuk foto persegi dan ukurannya `**(n%1000)+50**` dimana **n** adalah waktu Epoch Unix dalam detik saat itu dengan selang 5 detik.
 
    Untuk membuat bentuk foto persegi cukup menambahkan satu bilangan setelah url sesuai dengan petunjuk di website tersebut. Mengambil waktu Epoch Unix dalam detik dapat menggunakan library `**time.h**` seperti pada gambar di bawah. Looping untuk mendownload juga dapat dilakukan menggunakan lopping biasa dan memanggil sub-proses di dalam looping tersebut. Mendownload juga dilakukan dengan `execv` memanggil `wget` dengan option `-O (nama_file)` dimana nama filenya **[tahun-bulan-tanggal_jam:menit:detik]** saat mendownload gambar tersebut, nama itu juga dapat dibuat dengan cara yang sama seperti nomor 1. Sebelum loop berlanjut, dilakukan `sleep(5)` agar foto yang didownload akan tepat 5 detik setelah foto sebelumnya terdownload.
 
-   [Gambar mengambil waktu saat ini]
-   [Gambar Looping]
+   ![loop](https://user-images.githubusercontent.com/68368240/115980416-cbfe3e80-a5b6-11eb-8df4-702f8e8d3b47.png "Looping Download Foto")
 
 3. Membuat file **status.txt** berisi kalimat _Download Success_ lalu dilakukan Caesar Chiper +5. Yang terakhir meletakkan folder tersebut di sebuah zip dan menghapus folder sehingga yang tersisa tinggal file zip.
 
    Untuk membuat file **status.txt** memakai tipe data `FILE` lalu `fopen` dengan opsi `w+` untuk membuat file baru dan menuliskan ke file baru tersebut. Caesar cipher dapat dilakukan dengan menggunakan kode seperti gambar dibawah. Setelah dienkripsi, dapat dituliskan ke dalam file menggunakan `fputs` dan jangan lupa di-close dengan `fclose`. Untuk melakukan kompress zip dengan membuat sub-proses `execv` dan `zip` lalu menghapus folder dengan `execv` dan `rm -r`.
 
-   [Gambar Caesar Cipher]
-   [Gambar membuat file txt]
-   [Gambar zip folder]
+   ![caesar_cipher](https://user-images.githubusercontent.com/68368240/115980426-dfa9a500-a5b6-11eb-85d4-0610b35aebdb.png "Caesar Cipher)
+   ![status](https://user-images.githubusercontent.com/68368240/115980432-e3d5c280-a5b6-11eb-82f8-940cad921627.png "status.txt")
+   ![zip](https://user-images.githubusercontent.com/68368240/115980436-e9cba380-a5b6-11eb-86f9-1ceffcab6ec2.png "zip folder")
+   ![rm](https://user-images.githubusercontent.com/68368240/115980437-eb956700-a5b6-11eb-9caa-30c1e8c86025.png "menghapus folder")
+
 
 4. Membuat program **Killer** untuk mematikan program yang berjalan di latar belakang.
 5. Membuat program berjalan dua mode `-z` atau `-x` dimana `-z` membuat program **Killer** untuk mematikan seluruh proses sekaligus, sedangkan `-x` membuat program **Killer** menunggu hasil download selesai terlebih dahulu lalu dimatikan prosesnya.
 
    Membuat program **Killer** dilakukan dengan menggunakn `FILE` sama seperti membuat **status.txt**. Untuk program **Killer** `-z` dilakukan dengan memanfaatkan `killall` dan dilanjuti nama program yang berjalan, untuk kasus ini adalah `soal3`. Sedangkan `-x` dapat dilakukan dengan memanggil `kill -9` lalu diikuti pid dari proses yang didapat dengan memanggil `getpid()`. Untuk pembuatan **Killer** dilakukan sebelum proses utama berjalan.
 
-   [Gambar mengecek mode]
-   [Gambar membuat killer]
+   ![mode](https://user-images.githubusercontent.com/68368240/115980449-049e1800-a5b7-11eb-9de8-7a9de9a0e060.png "Mengecek Mode")
+   ![mode2](https://user-images.githubusercontent.com/68368240/115980452-09fb6280-a5b7-11eb-8136-abf6398455aa.png "Mengecek Mode")
+   ![make_killer](https://user-images.githubusercontent.com/68368240/115980454-0cf65300-a5b7-11eb-8a47-3afd41f131df.png "Membuat Killer.sh")
 
 ### Kendala saat mengerjakan
 Sempat tidak berjalan `execv` untuk memanggil `wget` dimana file yang terdownload tidak lengkap. Menduga karena semua STD ditutup makanya mengalihkan STD ke `/dev/null` dengan menggunakan `fd` dan `dup2`, dengan begitu program utama dapat berjalan dengan lancar.

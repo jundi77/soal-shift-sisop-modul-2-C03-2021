@@ -27,8 +27,11 @@ Pada soal ini terdapat 5 permasalahan yang perlu dikerjakan. Sebelum itu, soal n
    Untuk membuat file **status.txt** memakai tipe data `FILE` lalu `fopen` dengan opsi `w+` untuk membuat file baru dan menuliskan ke file baru tersebut. Caesar cipher dapat dilakukan dengan menggunakan kode seperti gambar dibawah. Setelah dienkripsi, dapat dituliskan ke dalam file menggunakan `fputs` dan jangan lupa di-close dengan `fclose`. Untuk melakukan kompress zip dengan membuat sub-proses `execv` dan `zip` lalu menghapus folder dengan `execv` dan `rm -r`.
 
    ![caesar_cipher](https://user-images.githubusercontent.com/68368240/115980426-dfa9a500-a5b6-11eb-85d4-0610b35aebdb.png "Caesar Cipher)
+   
    ![status](https://user-images.githubusercontent.com/68368240/115980432-e3d5c280-a5b6-11eb-82f8-940cad921627.png "status.txt")
+   
    ![zip](https://user-images.githubusercontent.com/68368240/115980436-e9cba380-a5b6-11eb-86f9-1ceffcab6ec2.png "zip folder")
+   
    ![rm](https://user-images.githubusercontent.com/68368240/115980437-eb956700-a5b6-11eb-9caa-30c1e8c86025.png "menghapus folder")
 
 
@@ -38,7 +41,9 @@ Pada soal ini terdapat 5 permasalahan yang perlu dikerjakan. Sebelum itu, soal n
    Membuat program **Killer** dilakukan dengan menggunakn `FILE` sama seperti membuat **status.txt**. Untuk program **Killer** `-z` dilakukan dengan memanfaatkan `killall` dan dilanjuti nama program yang berjalan, untuk kasus ini adalah `soal3`. Sedangkan `-x` dapat dilakukan dengan memanggil `kill -9` lalu diikuti pid dari proses yang didapat dengan memanggil `getpid()`. Untuk pembuatan **Killer** dilakukan sebelum proses utama berjalan.
 
    ![mode](https://user-images.githubusercontent.com/68368240/115980449-049e1800-a5b7-11eb-9de8-7a9de9a0e060.png "Mengecek Mode")
+   
    ![mode2](https://user-images.githubusercontent.com/68368240/115980452-09fb6280-a5b7-11eb-8136-abf6398455aa.png "Mengecek Mode")
+   
    ![make_killer](https://user-images.githubusercontent.com/68368240/115980454-0cf65300-a5b7-11eb-8a47-3afd41f131df.png "Membuat Killer.sh")
 
 ### Kendala saat mengerjakan

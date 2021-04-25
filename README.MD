@@ -19,7 +19,21 @@ c. Untuk mengekstrak folder zip pada soal b kami menggunakan `unzip` dan fungsi 
 
 d. Pada soal d, kami memindahkan file yang sebelumnya telah didownload dan diekstrak menuju folder tujuan yang telah dibuat dengan menggunakan `cp` dan fungsi `execv` untuk menjalankannya. 
 
+![Screenshot (1729)](https://user-images.githubusercontent.com/55623766/115994891-1ad1c580-a603-11eb-8e38-f6cdf4bd6040.png)
 
+e. Perintah soal e adalah agar semua hal di atas berjalan otomatis 6 jam sebelum waktu ulang tahun Stevany. Dalam code kami mengatur tanggal 9 April pada pukul 16:22:0. 
+   
+   `if(t->tm_mon==3 && t->tm_mday==9 && t->tm_hour==16 && t->tm_min==22 && t->tm_sec==0)`
+   
+   Selanjutnya pada terminal linux dengan menjalankan `sudo date --set="2021-04-09 16:22:00"`.
+   
+   ![VirtualBox_Ubuntu_25_04_2021_20_30_27](https://user-images.githubusercontent.com/55623766/115995264-c7f90d80-a604-11eb-8323-bd90b48d81d6.png)
+
+f. Terakhir, setelah tiba pada waktu ulang tahunnya Stevany, semua folder akan di-zip dengan nama Lopyu_Stevany.zip dan semua folder akan di-delete (sehingga hanya menyisakan .zip). Di sini kami mengatur waktu dengan menjalankan `sudo date --set="2021-04-09 16:22:00"`. Untuk melakukan zip pada folder maka digunakan `zip` dan fungsi `execv` untuk menjalankannya. Dan, untuk men-delete folder kami menggunakan `rm`.
+
+![Screenshot (1730)](https://user-images.githubusercontent.com/55623766/115995441-68e7c880-a605-11eb-9bde-ad8eb8c87a91.png)
+
+![VirtualBox_Ubuntu_25_04_2021_20_36_06](https://user-images.githubusercontent.com/55623766/115995468-83ba3d00-a605-11eb-8f71-add06452c722.png)
 
 ## Soal 2
 Alur program yang dirancang untuk nomor 2 sebagai jawaban kami adalah:`execv
